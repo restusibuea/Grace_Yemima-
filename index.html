@@ -1,0 +1,362 @@
+<!-- 
+  ✨ GRACE'S PERSONAL LANDING PAGE ✨
+  
+  CARA MENGEDIT HALAMAN INI:
+  1. GANTI FOTO PROFIL: Cari tag <img> dengan class "profile-img" dan ganti URL-nya.
+  2. GANTI NAMA: Cari teks "Grace" di dalam tag <h1>.
+  3. GANTI BIO: Cari teks "trying to romanticize my life ✨" di dalam tag <p class="bio">.
+  4. GANTI LINK: Cari atribut 'href' pada setiap tag <a> (misal: href="https://instagram.com/grace").
+  5. GANTI TEKS TOMBOL: Cari teks di dalam tag <span> pada setiap link.
+-->
+
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Grace | Links</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-start: #fce4ec;
+            --bg-end: #f8bbd0;
+            --text-main: #4a4a4a;
+            --text-soft: #888888;
+            --white-glass: rgba(255, 255, 255, 0.7);
+            --accent-pink: #f06292;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            color: var(--text-main);
+            overflow-x: hidden;
+            padding: 40px 20px;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 100%);
+            z-index: -2;
+        }
+
+        /* Animated Confetti/Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Container & Card */
+        .wrapper {
+            width: 100%;
+            max-width: 480px;
+            text-align: center;
+            animation: fadeIn 1.2s ease-out forwards;
+        }
+
+        @media (min-width: 481px) {
+            .wrapper {
+                background: rgba(255, 255, 255, 0.4);
+                backdrop-filter: blur(10px);
+                padding: 40px;
+                border-radius: 40px;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+            }
+        }
+
+        /* Profile Section */
+        .profile {
+            margin-bottom: 35px;
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 8px 20px rgba(240, 98, 146, 0.15);
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .bio {
+            font-size: 0.95rem;
+            color: var(--text-soft);
+            letter-spacing: -0.5px;
+        }
+
+        /* Links Section */
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .link-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--white-glass);
+            padding: 14px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .link-item:hover {
+            transform: scale(1.03);
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 20px rgba(240, 98, 146, 0.1);
+        }
+
+        .link-item span {
+            margin-left: 10px;
+        }
+
+        /* Expandable Card Logic */
+        .expandable {
+            flex-direction: column;
+            height: auto;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .link-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text-soft);
+            font-style: italic;
+            padding: 0 20px;
+        }
+
+        .expandable.active {
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            transform: scale(1.02);
+        }
+
+        .expandable.active .link-content {
+            max-height: 200px;
+            opacity: 1;
+            padding: 10px 20px 20px;
+        }
+
+        .expandable .link-main {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 50px;
+            font-size: 0.75rem;
+            color: #f48fb1;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        footer a {
+            text-decoration: none;
+            color: inherit;
+            transition: opacity 0.3s ease;
+        }
+
+        footer a:hover {
+            opacity: 0.8;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile specific tweaks for Instagram Browser */
+        @media (max-width: 480px) {
+            body {
+                padding-top: 60px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background Particles -->
+    <div class="particles" id="particles"></div>
+
+    <div class="wrapper">
+        <!-- Profile Section -->
+        <div class="profile">
+            <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1000&auto=format&fit=crop"
+                alt="Grace" class="profile-img">
+            <h1>@Grace_Yemima</h1>
+            <p class="bio">Kadang Tuhan mengizinkan kita patah. Supaya kita tahu hanya Dia yang bisa merekatkan lagi.
+            </p>
+        </div>
+
+        <!-- Links Section -->
+        <div class="links-container">
+            <a href="https://instagram.com/grace" target="_blank" rel="noopener noreferrer" class="link-item">
+                <span>📸 Ikuti Instagramku</span>
+            </a>
+
+            <a href="https://tiktok.com/@grace" target="_blank" rel="noopener noreferrer" class="link-item">
+                <span>🎬 Temukan aku di TikTok</span>
+            </a>
+
+            <div class="link-item expandable" onclick="toggleVerse(this)">
+                <div class="link-main">
+                    <span>📖 Ayat Andalanku</span>
+                </div>
+                <div class="link-content">
+                    "Segala perkara dapat kutanggung di dalam Dia yang memberi kekuatan kepadaku."
+                    <br><strong
+                        style="color: var(--accent-pink); font-size: 0.8rem; display: block; margin-top: 5px;">Filipi
+                        4:13</strong>
+                </div>
+            </div>
+
+            <a href="https://open.spotify.com/playlist/grace" target="_blank" rel="noopener noreferrer"
+                class="link-item">
+                <span>🎵 Spotify Playlist Favorit</span>
+            </a>
+
+            <a href="https://pinterest.com/grace" target="_blank" rel="noopener noreferrer" class="link-item">
+                <span>📌 Papan Pinterest-ku</span>
+            </a>
+
+            <a href="https://wa.me/628123456789" target="_blank" rel="noopener noreferrer" class="link-item">
+                <span>💬 Kontak via WhatsApp</span>
+            </a>
+
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <a href="https://www.instagram.com/restuwa_03/" target="_blank" rel="noopener noreferrer">
+                made with ☕ by someone who cares
+            </a>
+        </footer>
+    </div>
+
+    <script>
+        // Generate soft floating particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 15;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+
+                const size = Math.random() * 15 + 5;
+                const left = Math.random() * 100;
+                const delay = Math.random() * 15;
+                const duration = Math.random() * 10 + 10;
+
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.opacity = Math.random() * 0.5 + 0.2;
+
+                container.appendChild(particle);
+            }
+        }
+
+        function toggleVerse(element) {
+            element.classList.toggle('active');
+        }
+
+        window.onload = createParticles;
+    </script>
+</body>
+
+</html>
